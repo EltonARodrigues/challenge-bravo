@@ -14,6 +14,7 @@ router.register(r'currency', CurrencyViewSet)
 
 
 urlpatterns = [
+    path('import_all/',CurrencyViewSet.import_all, name='detail'),
     path('convert/', CurrencyConversionView.as_view(), name="currency"),
     path('', include(router.urls))
 ]

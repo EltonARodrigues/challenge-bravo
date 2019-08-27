@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.core.validators import RegexValidator
 from conver.models import Currency
+from conver.helpers import ImportUSDFromExternalAPI
 
 validator = [RegexValidator(regex='^.{3}$', message='Length has to be 3', code='nomatch')]
 
@@ -28,7 +29,7 @@ class CurrencyConversionSerializer(serializers.ModelSerializer):
         try:
             source_value = self.__get_values_from_model(source_name)
             destination_value = self.__get_values_from_model(destination_name)
-            result = (source_value / destination_value) * value_to_convert
+            result = (destination_value/source_value) * value_to_convert
 
         except Currency.DoesNotExist:
             result = 'Error to calculate... check the parameters'
